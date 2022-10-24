@@ -1,0 +1,27 @@
+{
+  "name": "team-website-generator",
+  "version": "1.0.0",
+  "description": "This repo contains an application that will generate a team website based on user input. User will be prompted for at least a manager and optional engineers and interns. Cards with contact info will be generated for each employee.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joedjensen/team-website-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joedjensen/team-website-generator/issues"
+  },
+  "homepage": "https://github.com/joedjensen/team-website-generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "jest": "^29.2.1"
+  }
+}
