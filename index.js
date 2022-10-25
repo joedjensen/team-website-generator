@@ -2,7 +2,7 @@ const Manager = require("./lib/Manager")
 const Engineer = require("./lib/Engineer")
 const Intern = require("./lib/Intern")
 const inquirer = require("inquirer")
-const fs = require("fs")
+const generateHTML = require("./dist/generateHTML")
 
 employees = []
 
@@ -29,6 +29,7 @@ function addManager() {
             }
         ]
     ).then(({ name, id, email, officeNumber }) => {
+        checkId(id)
         const manager = new Manager(name, id, email, officeNumber)
         employees.push(manager)
         console.log(employees)
@@ -86,6 +87,7 @@ function addEngineer() {
             }
         ]
     ).then(({ name, id, email, github }) => {
+        checkId(id)
         const engineer = new Engineer(name, id, email, github)
         employees.push(engineer)
         console.log(employees)
@@ -117,6 +119,7 @@ function addIntern() {
             }
         ]
     ).then(({ name, id, email, school }) => {
+        checkId(id)
         const intern = new Intern(name, id, email, school)
         employees.push(intern)
         console.log(employees)
@@ -128,5 +131,12 @@ function addIntern() {
 }
 
 function exit() {
-    return
+    generateHTML(employees)
+}
+
+function checkId(id) {
+    let match = employees.filter(employee => employee.id === id)
+    if (match.length > 0) {
+        throw new Error(`ID ${id} already in use by ${match[0].name}`)
+    }
 }
