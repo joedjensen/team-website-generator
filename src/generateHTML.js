@@ -36,7 +36,7 @@ function generateHTML(employees) {
 }
 function generateCard(employee) {
     return `<div class="col-12 col-md-6 col-lg-4">
-                <div class="card mb-5">
+                <div class="card mb-5 shadow">
                     <div class="card-header bg-primary text-white">
                         <h4>${employee.getName()}</h4>
                         <h5><i class="fa-solid ${employee.getIcon()}"></i> ${employee.getRole()}</h5>

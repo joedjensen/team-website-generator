@@ -35,7 +35,6 @@ function addManager() {
     ).then(({ name, id, email, officeNumber }) => {
         const manager = new Manager(name, id, email, officeNumber)
         employees.push(manager)
-        console.log(employees)
         promptForEmployees()
     }).catch((err) => {
         console.error(err.message)
@@ -96,7 +95,6 @@ function addEngineer() {
     ).then(({ name, id, email, github }) => {
         const engineer = new Engineer(name, id, email, github)
         employees.push(engineer)
-        console.log(employees)
         promptForEmployees()
     }).catch((err) => {
         console.error(err.message)
@@ -131,7 +129,6 @@ function addIntern() {
     ).then(({ name, id, email, school }) => {
         const intern = new Intern(name, id, email, school)
         employees.push(intern)
-        console.log(employees)
         promptForEmployees()
     }).catch((err) => {
         console.error(err.message)
