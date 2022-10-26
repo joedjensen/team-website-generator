@@ -2,7 +2,7 @@ const Manager = require("./lib/Manager")
 const Engineer = require("./lib/Engineer")
 const Intern = require("./lib/Intern")
 const inquirer = require("inquirer")
-const generateHTML = require("./dist/generateHTML")
+const generateHTML = require("./src/generateHTML")
 
 employees = []
 
@@ -13,23 +13,26 @@ function addManager() {
         [
             {
                 name: "name",
-                message: "What is the managers name?"
+                message: "What is the managers name?",
+                validate:checkString
             },
             {
                 name: "id",
-                message: "What is the managers employee ID?"
+                message: "What is the managers employee ID?",
+                validate: checkId
             },
             {
                 name: "email",
-                message: "What is the managers email address?"
+                message: "What is the managers email address?",
+                validate:checkEmail
             },
             {
                 name: "officeNumber",
-                message: "What is the managers office number?"
+                message: "What is the managers office number?",
+                validate:checkNumber
             }
         ]
     ).then(({ name, id, email, officeNumber }) => {
-        checkId(id)
         const manager = new Manager(name, id, email, officeNumber)
         employees.push(manager)
         console.log(employees)
@@ -71,23 +74,26 @@ function addEngineer() {
         [
             {
                 name: "name",
-                message: "What is the engineers name?"
+                message: "What is the engineers name?",
+                validate:checkString
             },
             {
                 name: "id",
-                message: "What is the engineers employee ID?"
+                message: "What is the engineers employee ID?",
+                validate: checkId
             },
             {
                 name: "email",
-                message: "What is the engineers email address?"
+                message: "What is the engineers email address?",
+                validate: checkEmail
             },
             {
                 name: "github",
-                message: "What is the engineers github username?"
+                message: "What is the engineers github username?",
+                validate: checkString
             }
         ]
     ).then(({ name, id, email, github }) => {
-        checkId(id)
         const engineer = new Engineer(name, id, email, github)
         employees.push(engineer)
         console.log(employees)
@@ -103,23 +109,26 @@ function addIntern() {
         [
             {
                 name: "name",
-                message: "What is the interns name?"
+                message: "What is the interns name?",
+                validate: checkString
             },
             {
                 name: "id",
-                message: "What is the interns employee ID?"
+                message: "What is the interns employee ID?",
+                validate:checkId
             },
             {
                 name: "email",
-                message: "What is the interns email address?"
+                message: "What is the interns email address?",
+                validate: checkEmail
             },
             {
                 name: "school",
-                message: "What is the interns school?"
+                message: "What is the interns school?",
+                validate: checkString
             }
         ]
     ).then(({ name, id, email, school }) => {
-        checkId(id)
         const intern = new Intern(name, id, email, school)
         employees.push(intern)
         console.log(employees)
@@ -134,9 +143,30 @@ function exit() {
     generateHTML(employees)
 }
 
-function checkId(id) {
+async function checkId(id) {
+    let isNumber = await checkNumber(id)
+    if (!(isNumber === true)) {
+        return isNumber
+    }
     let match = employees.filter(employee => employee.id === id)
     if (match.length > 0) {
-        throw new Error(`ID ${id} already in use by ${match[0].name}`)
+        return (`ID ${id} already in use by ${match[0].name}`)
     }
+    return true
+}
+async function checkNumber(number){
+    if (isNaN(number)) {
+        return "Expected parameter to be an integer"
+    } else return true
+}
+async function checkEmail(email){
+    if (email.match(/.+\@.+\..+/g)){
+        return true
+    } else return "Expected parameter 'email' to follow simple email form e.g. 'anychars@more.evenmore'"
+}
+
+async function checkString(string) {
+    if (typeof string !== "string" || !string.trim().length) {
+        return "Expected parameter to be a non-empty string"
+    } else return true
 }
